@@ -5,7 +5,7 @@
 # systemctl enable chronyd --now
   
 ##/etc/chrony.conf
-##server time.bora.net iburst # 필요시 추가 방화벽 UDP 123 open필요, 기본 설정되어 있는 pool 의 경우 IP를 특정하기 어렵기에 time.bora.net 으로 특정해주는 것이 방화벽 입장에서는 편함
+##server time.bora.net iburst # time.bora.net 은 필요시 추가, 방화벽 UDP 123 outbound open필요, 기본 설정되어 있는 pool 의 경우 IP를 특정하기 어렵기에 time.bora.net 으로 특정해주는 것이 방화벽 입장에서는 편함
 
 # chronyc sources
 MS Name/IP address         Stratum Poll Reach LastRx Last sample               
