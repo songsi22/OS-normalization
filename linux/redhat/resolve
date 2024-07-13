@@ -1,0 +1,13 @@
+/etc/resolve.conf
+## nameserver 로 여러 다양한 DNS 서버를 사용할 수 있다.
+## 클라우드 환경에서는 특별한 상황이 아니라면 CSP 제공 DNS 를 사용(VM 기본 resolve.conf 사용)을 권고 한다.
+## 만약 실수로 nameserver 의 IP를 잘못 기입하거나 DNS 서버가 죽게된다면 ssh로 서버 접속시에 약 1분여간 접속 지연이 발생한다.
+
+nameserver 168.126.63.1 ## KT 1차 DNS
+nameserver 168.126.63.2 ## KT 2차 DNS
+nameserver 8.8.8.8 ## google 1차 DNS
+nameserver 8.8.4.4 ## google 2차 DNS
+nameserver 210.220.163.82 ## SKB 1차 DNS
+nameserver 219.250.36.130 ## SKB 2차 DNS
+nameserver 164.124.101.2 ## LG U+ 1차 DNS
+nameserver 203.248.252.2 ## LG U+ 1차 DNS
