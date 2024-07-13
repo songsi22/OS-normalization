@@ -1,0 +1,97 @@
+## 물리 메모리가 부족할 때를 대비하여 디스크의 공간에 swap 이라는 영역을 만들어 메모리가 부족할 때 추가로 메모리 처럼 사용할 수 있다.
+## 디스크의 속도에 영향을 받아도 일시적으로 부족한 메모리에 대한 대안책이 되어준다.
+## 파일 시스템(SWAP 전용)을 통해 만든 공간이나, 파일을 만들어 swap 영역을 만들 수 있다.
+
+## 1. 파일을 통한 생성 예시
+# mkdir /swap
+# dd if=/dev/zero of=/swap/swapfile bs=1M count=2048
+# chmod 600 /swap/swapfile
+# mkswap /swap/swapfile
+# swapon /swap/swapfile
+# swapon --show
+# free -h
+              total        used        free      shared  buff/cache   available
+Mem:           3.7G        207M        1.2G        9.0M        2.3G        3.2G
+Swap:          2.0G          0B
+# swapon --show
+NAME           TYPE SIZE USED PRIO
+/swap/swapfile file   2G   0B   -2
+
+## 2. 파일시스템을 통한 생성 예시
+# lsblk
+NAME    MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+xvda    202:0    0  50G  0 disk
+└─xvda1 202:1    0  50G  0 part /
+xvdb    202:16   0  10G  0 disk
+# fdisk /dev/xvdb
+Command (m for help): p
+
+Disk /dev/xvdb: 10.7 GB, 10737418240 bytes, 20971520 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk label type: dos
+Disk identifier: 0xdfc33048
+
+    Device Boot      Start         End      Blocks   Id  System
+
+Command (m for help): n
+Partition type:
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended
+Select (default p): p
+Partition number (1-4, default 1):
+First sector (2048-20971519, default 2048):
+Using default value 2048
+Last sector, +sectors or +size{K,M,G} (2048-20971519, default 20971519): 2G
+Value out of range.
+Last sector, +sectors or +size{K,M,G} (2048-20971519, default 20971519): +2G
+Partition 1 of type Linux and of size 2 GiB is set
+
+Command (m for help): t
+Selected partition 1
+Hex code (type L to list all codes): 82
+Changed type of partition 'Linux' to 'Linux swap / Solaris'
+
+Command (m for help): p
+
+Disk /dev/xvdb: 10.7 GB, 10737418240 bytes, 20971520 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk label type: dos
+Disk identifier: 0xdfc33048
+
+    Device Boot      Start         End      Blocks   Id  System
+/dev/xvdb1            2048     4196351     2097152   82  Linux swap / Solaris
+
+Command (m for help): w
+The partition table has been altered!
+
+Calling ioctl() to re-read partition table.
+Syncing disks.
+# lsblk
+NAME    MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+xvda    202:0    0  50G  0 disk
+└─xvda1 202:1    0  50G  0 part /
+xvdb    202:16   0  10G  0 disk
+└─xvdb1 202:17   0   2G  0 part
+# swapon --show
+NAME           TYPE SIZE USED PRIO
+/swap/swapfile file   2G   0B   -2
+
+# mkswap /dev/xvdb1
+# swapon /dev/xvdb1
+# free -h
+              total        used        free      shared  buff/cache   available
+Mem:           3.7G        208M        1.2G        9.0M        2.3G        3.2G
+Swap:          4.0G          0B        4.0G
+# swapon --show
+NAME           TYPE      SIZE USED PRIO
+/swap/swapfile file        2G   0B   -2
+/dev/xvdb1     partition   2G   0B   -3
+
+## swap을 재부팅 후에도 사용할 수 있도록 /etc/fstab 에 등록
+/etc/fstab
+UUID=96d07341-9c88-482f-b8ff-210652dc576f / none swap sw 0 0
+/swap/swapfile none swap sw 0 0
