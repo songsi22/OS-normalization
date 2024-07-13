@@ -1,0 +1,22 @@
+## 클라우드 환경에서 그 지역의 타임존을 사용하지 않는 경우가 종종 있다.
+# timedatectl set-timezone Asia/Seoul 또는 # ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
+
+# yum install chrony -y
+# systemctl enable chronyd --now
+  
+##/etc/chrony.conf
+##server time.bora.net iburst # 필요시 추가
+
+# chronyc sources
+MS Name/IP address         Stratum Poll Reach LastRx Last sample               
+===============================================================================
+^- 10.250.255.21                 3   6   377    36  +3752us[+3752us] +/-   36ms
+^- 10.250.255.22                 3   6   377    47  +2975us[+2975us] +/-   30ms
+^- 121.174.142.82                3  10   377   162   +611us[ +577us] +/-   50ms
+^* mail.innotab.com              3   9   377    85   -234us[ -274us] +/- 7897us
+^+ 175.193.3.234                 3  10   377   862   +638us[ +648us] +/-   13ms
+^+ any.time.nl                   2   7   377    18   +454us[ +454us] +/-   19ms
+
+## Reach 377은 8진수 표현이며 10진수로 255 2진수로 11111111 를 의미하며 마지막 8개의 연결이 모두 성공을 의미하고, 377은 정상적인 NTP 설정을 의미한다
+## 동기화 하고자하는 시간과 시스템의 시간이 차이가 많이 날때 동기화가 안되기에 수동으로 근접하게 변경 후 동기화를 해야 한다
+## 377 까지의 동기화는 수분의 시간을 필요로 한다
