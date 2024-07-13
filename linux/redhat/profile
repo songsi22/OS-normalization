@@ -1,0 +1,6 @@
+/etc/profile
+
+TMOUT=300 # 5분동안 터미널에 명령어 입력이 없다면 세션 종료
+HISTFILESIZE=10000 # .bash_history 파일의 크기 지정, 0 으로 할 경우 명령어를 기록하지 않게되어 보안상 매우 좋지만 관리 효율성이 떨어짐
+HISTTIMEFORMAT="[%F %T]  " # [2024-07-13 11:55:14] 형태로 명령어 날짜 기록
+export TMOUT HISTFILESIZE HISTTIMEFORMAT
