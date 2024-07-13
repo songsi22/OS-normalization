@@ -1,0 +1,14 @@
+/etc/fstab
+UUID=79ec23f4-ea9a-4f2c-a2da-8be4ff4a4f09 /                       xfs     defaults        0 0
+## /dev/disk/by-uuid/79ec23f4-ea9a-4f2c-a2da-8be4ff4a4f09 / xfs defaults 0 0 위와 같은 예시
+## 블록디바이스는 UUID 형태로 fstab 에 등록한다.
+## 한개의 블록디바이스만 있는 경우 문제되지 않지만 여러 블록디바이스 또는 파티션이 있는 경우에 시스템 재부팅 이후 디바이스 또는 파티션 이름이 서로 바뀔 수 있다.(올라오는 순서에 따라서 뒤바뀜)
+## 이를 방지하기 위해 명령어 blkid 또는 ls -al /dev/disk/by-uuid/* 를 통해 확인되는 블록디바이스의 UUID 로 fstab 에 등록한다.
+
+
+10.00.00.00:/volume1 /mnt/nas nfs vers=3,defaults,nofail 0 0 
+## NFS 를 마운트할 때 vers=3 라고 NFSv3 을 사용할 수 있다.
+## nofail 옵션을 사용하여 리눅스 부팅 중에 /mnt/nas 가 어떠한 이유(NFS 의 경우 네트워크 문제이거나 물리 스토리지 문제)로 오랜시간 대기하게되는 문제를 피할 수 있다.
+## nofail 옵션은 NFS 외에도 파일시스템에서도 사용한다.
+
+
