@@ -1,2 +1,8 @@
 /etc/hosts
 ###::1         localhost localhost.localdomain localhost6 localhost6.localdomain6 ## ipv6를 쓰는게 아니라면 주석처리(큰 문제를 야기시키는 것은 아니지만 일부 프로그램들이 ipv6 로 루프돌면서 이상한 방향으로 네트워크가 흐르는 경우가 있음(예: postfix ipv6 관련 에러)
+
+/etc/hosts 파일은 기본적으로 파일 권한이 root.root에 644 를 갖고 있다.
+보안 점검 중에 종종 파일 권한을 400 으로 하도록 권고하는 보안 수준이 있다.
+이 경우 /etc/hosts 를 참조해야하는 프로그램들이 /etc/hosts 에 접근하지 못하는 문제가 발생하며 이때 서비스 장애를 유발한다.
+예로 tomcat 계정으로 동작하는 톰캣 서비스가 /etc/hosts 를 참조해야하는데 400 으로 파일 권한이 설정되어 있다면 /etc/hosts 를 읽지 못하여 프로그램이 실행되지 않거나
+동작 중이던 톰캣이 서비스가 중지 되는 사례가 있다.
