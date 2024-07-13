@@ -5,7 +5,7 @@
 # systemctl enable chronyd --now
   
 ##/etc/chrony.conf
-##server time.bora.net iburst # 필요시 추가
+##server time.bora.net iburst # 필요시 추가 방화벽 UDP 123 open필요, 기본 설정되어 있는 pool 의 경우 IP를 특정하기 어렵기에 time.bora.net 으로 특정해주는 것이 방화벽 입장에서는 편함
 
 # chronyc sources
 MS Name/IP address         Stratum Poll Reach LastRx Last sample               
@@ -19,5 +19,5 @@ MS Name/IP address         Stratum Poll Reach LastRx Last sample
 
 ## Reach 377은 8진수 표현이며 10진수로 255 2진수로 11111111 를 의미하며 마지막 8개의 연결이 모두 성공을 의미하고, 377은 정상적인 NTP 설정을 의미한다
 ## 동기화 하고자하는 시간과 시스템의 시간이 차이가 많이 날때 동기화가 안되기에 수동으로 근접하게 변경 후 동기화를 해야 한다
-## # date -s "2024-07-13 12:00:00"
+## # date -s "2024-07-13 12:00:00" # 수동 변경 명령어
 ## 377 까지의 동기화는 수분의 시간을 필요로 한다
