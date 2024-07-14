@@ -1,0 +1,15 @@
+/etc/bashrc
+## 쉘에 다음과 같이, 사용자,호스트이름,경로,루트(#) 또는 일반 권한($), 정보를 보여준다. [root@c7ea0f78703b etc]# pwd
+PS1="[\u@\h \W]\\$ " # 만약 없다면 추가, [ "$PS1" = "\\s-\\v\\\$ " ] && PS1="[\u@\h \W]\\$ " 이러한 형태로 있을 수 있음
+
+# 전체 사용자에게 alias 를 사용하고자 한다면 /etc/bashrc 에 등록
+# 개별 사용자에게 alias 를 사용하고자 한다면 /home/사용자/.bashrc 에서 alias 등록
+alias df='df -h' # GB 용량으로 보기
+alias netl='netstat -nltp' # 리슨되어있는 PID 확인
+alias lsd='ls -al | grep ^d' # 디렉토리만 보기
+alias lsf='ls -l|grep ^-' # 파일만 보기
+alias p='cd ..' # 상위 경로 이동
+alias c='clear' 
+alias ps='ps -ef'
+alias duh='du -h --max-depth=1 ./' # 현재 위치의 디렉토리 용량 정보
+alias gg='exit'
