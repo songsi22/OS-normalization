@@ -11,4 +11,4 @@ shutdown : 종료 명령어이며 원격에서 /sbin/shutdown 를 이용하기 �
 
 
 
-polkdit : GUI 환경에서의 권한 관리를 위해 필수지만, CLI 만 하는 환경에서는 불필요
+polkitd : GUI 환경에서의 권한 관리를 위해 필수지만, CLI 만 하는 환경에서는 불필요
